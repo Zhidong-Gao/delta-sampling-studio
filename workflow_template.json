@@ -1,0 +1,211 @@
+{
+  "_comment": "ComfyUI API-format workflow for Delta Sampling. Node IDs are stable string names so app.js can address slots by name. Matches delta_sampler.py:LatentDeltaKSampler (3 model loaders, 3 independent positive/negative conditioning pairs, delta_strength/denoise).",
+  "source": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "v1-5-pruned-emaonly.safetensors"
+    },
+    "_meta": {
+      "title": "Source (SD1.5 base, no adapter)"
+    }
+  },
+  "adapted": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "v1-5-pruned-emaonly.safetensors"
+    },
+    "_meta": {
+      "title": "Adapted (SD1.5 base; ControlNet injected via conditioning)"
+    }
+  },
+  "target": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "v2-1_768-ema-pruned.safetensors"
+    },
+    "_meta": {
+      "title": "Target (SD2.1; receives delta)"
+    }
+  },
+  "source_pos_text": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "a photo of a small house with a window",
+      "clip": [
+        "source",
+        1
+      ]
+    }
+  },
+  "source_neg_text": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "(naked:1.5),(naked:2) (worst quality, low quality:1.4),negative_hand Negative Embedding,verybadimagenegative_v1.3,2girls,bad anatomy,bad hands,cropped,missing fingers,too many fingers,missing arms,long neck,Humpbacked,deformed,disfigured,poorly drawn face,distorted face,mutation,mutated,extra limb,ugly,poorly drawn hands,missing limb,floating limbs,disconnected limbs,malformed hands,out of focus,long body,missing toes,too many toes,monochrome,symbol,text,logo,door frame,window frame,mirror frame,",
+      "clip": [
+        "source",
+        1
+      ]
+    }
+  },
+  "adapted_pos_text": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "a photo of a small house with a window",
+      "clip": [
+        "adapted",
+        1
+      ]
+    }
+  },
+  "adapted_neg_text": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "(naked:1.5),(naked:2) (worst quality, low quality:1.4),negative_hand Negative Embedding,verybadimagenegative_v1.3,2girls,bad anatomy,bad hands,cropped,missing fingers,too many fingers,missing arms,long neck,Humpbacked,deformed,disfigured,poorly drawn face,distorted face,mutation,mutated,extra limb,ugly,poorly drawn hands,missing limb,floating limbs,disconnected limbs,malformed hands,out of focus,long body,missing toes,too many toes,monochrome,symbol,text,logo,door frame,window frame,mirror frame,",
+      "clip": [
+        "adapted",
+        1
+      ]
+    }
+  },
+  "target_pos_text": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "a photo of a small house with a window",
+      "clip": [
+        "target",
+        1
+      ]
+    }
+  },
+  "target_neg_text": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "(naked:1.5),(naked:2) (worst quality, low quality:1.4),negative_hand Negative Embedding,verybadimagenegative_v1.3,2girls,bad anatomy,bad hands,cropped,missing fingers,too many fingers,missing arms,long neck,Humpbacked,deformed,disfigured,poorly drawn face,distorted face,mutation,mutated,extra limb,ugly,poorly drawn hands,missing limb,floating limbs,disconnected limbs,malformed hands,out of focus,long body,missing toes,too many toes,monochrome,symbol,text,logo,door frame,window frame,mirror frame,",
+      "clip": [
+        "target",
+        1
+      ]
+    }
+  },
+  "latent": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "batch_size": 1
+    }
+  },
+  "cnet_load": {
+    "class_type": "ControlNetLoader",
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_canny.pth"
+    }
+  },
+  "cnet_image": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "control.png"
+    }
+  },
+  "sampler": {
+    "class_type": "LatentDeltaKSampler",
+    "_comment": "Custom node from delta_sampler.py (original 400-line version). Runs 3 models in lockstep, injects delta_strength\u00b7(\u03b5_adapted \u2212 \u03b5_source) into \u03b5_target each step in pixel-aligned latent space.",
+    "inputs": {
+      "source_model": [
+        "source",
+        0
+      ],
+      "source_positive": [
+        "source_pos_text",
+        0
+      ],
+      "source_negative": [
+        "source_neg_text",
+        0
+      ],
+      "adapted_model": [
+        "adapted",
+        0
+      ],
+      "adapted_positive": [
+        "adapted_cnet",
+        0
+      ],
+      "adapted_negative": [
+        "adapted_cnet",
+        1
+      ],
+      "target_model": [
+        "target",
+        0
+      ],
+      "target_positive": [
+        "target_pos_text",
+        0
+      ],
+      "target_negative": [
+        "target_neg_text",
+        0
+      ],
+      "delta_strength": 1.0,
+      "seed": 42,
+      "steps": 20,
+      "cfg": 7.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "latent_image": [
+        "latent",
+        0
+      ],
+      "denoise": 1.0
+    }
+  },
+  "decode": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "sampler",
+        0
+      ],
+      "vae": [
+        "target",
+        2
+      ]
+    }
+  },
+  "save": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "decode",
+        0
+      ],
+      "filename_prefix": "delta"
+    }
+  },
+  "adapted_cnet": {
+    "_comment": "Standard ComfyUI ControlNet wiring: ControlNetApplyAdvanced injects the control signal into BOTH the positive AND negative conditioning of the adapted leg, matching exp1_generate.py. Slot 0 = positive, slot 1 = negative.",
+    "class_type": "ControlNetApplyAdvanced",
+    "inputs": {
+      "positive": [
+        "adapted_pos_text",
+        0
+      ],
+      "negative": [
+        "adapted_neg_text",
+        0
+      ],
+      "control_net": [
+        "cnet_load",
+        0
+      ],
+      "image": [
+        "cnet_image",
+        0
+      ],
+      "strength": 1.0,
+      "start_percent": 0.0,
+      "end_percent": 1.0
+    }
+  }
+}

@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Delta Sampling Studio — SD 1.5 → SD 2.1</title>
+<style>
+/* ============================================================
+   Delta Sampling Studio · Sky Daydream
+   bright sky-blue · sakura pink · cream highlight · cloud SVG
+   ============================================================ */
+
+:root {
+  /* surfaces — soft daylight sky */
+  --bg:           #eaf3fc;
+  --bg-soft:      #f5fafe;
+  --bg-elev:      #ffffff;
+  --bg-elev-2:    #f1f7fd;
+
+  --line:         #d2e1f0;
+  --line-strong:  #b9cee3;
+
+  --ink:          #1d3557;       /* deep ocean navy */
+  --ink-2:        #4a6688;
+  --ink-dim:      #7a91ad;
+  --ink-faint:    #a6bbd1;
+
+  --accent:       #4d9de0;       /* clear sky blue */
+  --accent-2:     #6fb2ec;
+  --accent-deep:  #2f7cc7;
+  --accent-soft:  rgba(77, 157, 224, 0.14);
+
+  --pink:         #ffb3c8;       /* sakura pastel */
+  --pink-soft:    rgba(255, 179, 200, 0.22);
+  --mint:         #a8e6cf;
+  --cream:        #fff4cc;
+  --lilac:        #c8b6ff;
+
+  --ok:           #56c596;
+  --err:          #ef6c8b;
+  --warn:         #ffb627;
+
+  /* fonts — system stack, CJK-safe, leaning soft/rounded */
+  --display: "Hiragino Maru Gothic ProN", "Hiragino Sans GB",
+             "PingFang SC", "Microsoft YaHei",
+             -apple-system, BlinkMacSystemFont, "Segoe UI",
+             system-ui, sans-serif;
+  --sans:    -apple-system, BlinkMacSystemFont, "Segoe UI",
+             "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+             system-ui, sans-serif;
+  --mono:    ui-monospace, "SF Mono", "Menlo", Consolas, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  /* sky gradient — soft horizon */
+  background-image:
+    linear-gradient(180deg, #d5e8f7 0%, #eaf3fc 35%, #fff4e6 100%);
+  background-attachment: fixed;
+}
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+button { cursor: pointer; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #c5d6e7; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #a3bcd3; }
+
+/* ===================================================================
+   Background art: drifting clouds + sparkles (SVG, decorative)
+=================================================================== */
+.bg-art {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.bg-art svg {
+  position: absolute;
+  filter: drop-shadow(0 4px 12px rgba(120, 160, 200, 0.10));
+}
+.cloud-1 { top: 7%;  left: 5%;   width: 220px; opacity: 0.78; animation: drift-r 90s linear infinite; }
+.cloud-2 { top: 22%; right: 6%;  width: 280px; opacity: 0.65; animation: drift-l 110s linear infinite; }
+.cloud-3 { bottom: 14%; left: 12%; width: 180px; opacity: 0.6; animation: drift-r 130s linear infinite; }
+.cloud-4 { bottom: 22%; right: 14%; width: 240px; opacity: 0.55; animation: drift-l 100s linear infinite; }
+
+@keyframes drift-r {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(40px); }
+  100% { transform: translateX(0); }
+}
+@keyframes drift-l {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(-40px); }
+  100% { transform: translateX(0); }
+}
+
+.sparkle {
+  position: absolute;
+  width: 14px; height: 14px;
+  animation: twinkle 3s ease-in-out infinite;
+}
+.sparkle.s1 { top: 18%; left: 22%; animation-delay: 0s; }
+.sparkle.s2 { top: 35%; right: 28%; width: 10px; height: 10px; animation-delay: 1.2s; }
+.sparkle.s3 { top: 70%; left: 30%; width: 12px; height: 12px; animation-delay: 0.6s; }
+.sparkle.s4 { top: 12%; right: 14%; width: 8px; height: 8px; animation-delay: 1.8s; }
+.sparkle.s5 { bottom: 8%;  right: 35%; width: 11px; height: 11px; animation-delay: 0.3s; }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; transform: scale(0.85) rotate(0deg); }
+  50%      { opacity: 0.95; transform: scale(1.1)  rotate(180deg); }
+}
+
+/* ===================================================================
+   Frame
+=================================================================== */
+.frame {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  grid-template-rows: 60px 1fr;
+  height: 100vh;
+  max-width: 1680px;
+  margin: 0 auto;
+}
+
+/* ============== masthead ============== */
+.masthead {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-icon {
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--pink));
+  color: white;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 0 4px 14px rgba(77, 157, 224, 0.35);
+}
+.brand-mark {
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.brand-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  border-left: 1px solid var(--line);
+  padding-left: 10px;
+  margin-left: 4px;
+}
+.masthead-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.transfer-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  letter-spacing: 0.02em;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
+.transfer-line .arr {
+  color: var(--accent);
+  font-weight: 700;
+}
+.transfer-line .pill {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  background: var(--bg-elev-2);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+}
+.status .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ink-faint);
+}
+.status.ok   { color: var(--accent-deep); border-color: var(--accent); }
+.status.ok .dot { background: var(--ok); box-shadow: 0 0 0 3px rgba(86, 197, 150, 0.28); }
+.status.busy .dot { background: var(--warn); animation: pulse 1.2s ease-in-out infinite; }
+.status.err  { color: var(--err); }
+.status.err .dot { background: var(--err); }
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 currentColor; }
+  50%      { opacity: 0.5; box-shadow: 0 0 0 6px rgba(255, 182, 39, 0.2); }
+}
+
+/* ============== stage ============== */
+.stage {
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+}
+.canvas-wrap {
+  position: relative;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 36px;
+}
+.canvas {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  max-height: calc(100vh - 160px);
+  aspect-ratio: 1 / 1;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 179, 200, 0.18), transparent 60%),
+    radial-gradient(circle at 75% 80%, rgba(77, 157, 224, 0.14), transparent 60%),
+    #ffffff;
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  box-shadow: 0 18px 40px rgba(31, 71, 119, 0.10),
+              0 2px 8px  rgba(31, 71, 119, 0.05);
+}
+/* When a real image is rendered, drop the forced square so portrait/landscape
+   outputs (e.g. 512×768, 1024×512) shrink-wrap to their own aspect. */
+.canvas:has(.result-img:not(.hidden)) {
+  aspect-ratio: auto;
+  width: auto;
+  height: auto;
+}
+
+/* empty state */
+.canvas-empty {
+  text-align: center;
+  user-select: none;
+}
+.canvas-empty .delta-glyph {
+  font-family: var(--display);
+  font-size: 140px;
+  line-height: 1;
+  font-weight: 500;
+  display: inline-block;
+  position: relative;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--pink) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 6px 18px rgba(77, 157, 224, 0.25));
+  animation: gentle-tilt 6s ease-in-out infinite;
+}
+@keyframes gentle-tilt {
+  0%, 100% { transform: rotate(0)    scale(1);    }
+  50%      { transform: rotate(-2deg) scale(1.04); }
+}
+.canvas-empty .delta-glyph::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 112%;
+  width: 90px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: translateX(-50%);
+  border-radius: 999px;
+}
+.canvas-empty h2 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink);
+  margin-top: 44px;
+}
+.canvas-empty p {
+  margin-top: 12px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink-dim);
+}
+.canvas-empty kbd {
+  font-family: var(--mono);
+  background: white;
+  border: 1px solid var(--line-strong);
+  padding: 3px 9px;
+  border-radius: 7px;
+  color: var(--accent-deep);
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(31, 71, 119, 0.08);
+}
+
+/* loading state */
+.canvas-loading {
+  text-align: center;
+  width: 320px;
+}
+.scope {
+  position: relative;
+  width: 88px; height: 88px;
+  margin: 0 auto 28px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 8px 28px rgba(77, 157, 224, 0.18);
+}
+.scope::before, .scope::after {
+  content: "";
+  position: absolute;
+  background: var(--line-strong);
+}
+.scope::before { left: 50%; top: 10px; bottom: 10px; width: 1px; transform: translateX(-50%); }
+.scope::after  { top: 50%; left: 10px; right: 10px; height: 1px; transform: translateY(-50%); }
+.scope-sweep {
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  border-top-color: var(--accent);
+  border-right-color: var(--pink);
+  animation: scope-spin 1.2s linear infinite;
+}
+@keyframes scope-spin { to { transform: rotate(360deg); } }
+
+.loading-label {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.progress-track {
+  height: 6px;
+  background: var(--bg-elev-2);
+  border-radius: 999px;
+  position: relative;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  position: absolute;
+  inset: 0 100% 0 0;
+  background: linear-gradient(90deg, var(--accent), var(--pink));
+  border-radius: 999px;
+  transition: right 220ms ease;
+}
+.progress-step {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+}
+
+.result-img {
+  display: block;
+  max-width: min(600px, 90vw);
+  max-height: calc(100vh - 160px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(31, 71, 119, 0.18);
+}
+
+/* ============== rail (right) ============== */
+.rail {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-left: 1px solid var(--line);
+  overflow: hidden;
+}
+.rail-body {
+  padding: 22px 22px 14px;
+  overflow-y: auto;
+}
+
+.block { margin-bottom: 22px; }
+.block-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.block-num {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--accent-deep);
+  line-height: 1;
+  padding: 5px 9px;
+  background: var(--accent-soft);
+  border-radius: 6px;
+}
+.block-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+}
+.block-hint {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-left: auto;
+}
+.rule {
+  display: block;
+  height: 1px;
+  background: var(--line);
+  margin: 18px 0;
+}
+
+/* ---- prompt ---- */
+.prompt-input {
+  width: 100%;
+  background: white;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.55;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+  box-shadow: inset 0 1px 2px rgba(31, 71, 119, 0.03);
+}
+.prompt-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.prompt-input::placeholder { color: var(--ink-faint); }
+.prompt-input.is-neg {
+  font-size: 13px;
+  min-height: 60px;
+}
+.neg-fold { margin-top: 12px; }
+.neg-fold > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 8px;
+  user-select: none;
+}
+.neg-fold > summary::-webkit-details-marker { display: none; }
+.neg-fold > summary::before {
+  content: "+";
+  font-family: var(--mono);
+  width: 14px;
+  color: var(--accent);
+  font-weight: 700;
+}
+.neg-fold[open] > summary::before { content: "−"; }
+.neg-fold > summary:hover { color: var(--ink); }
+
+/* ---- model rows: Base / Adapted / Target ---- */
+.model-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.model-row {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  position: relative;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.model-row:hover { border-color: var(--line-strong); box-shadow: 0 4px 12px rgba(31,71,119,0.05); }
+.model-row::before {
+  content: "";
+  position: absolute;
+  inset: 14px auto 14px 0;
+  width: 4px;
+  border-radius: 999px;
+  background: var(--ink-faint);
+}
+.model-row[data-role="base"]::before    { background: var(--ink-dim); }
+.model-row[data-role="adapted"]::before { background: var(--pink); }
+.model-row[data-role="target"]::before  { background: var(--lilac); }
+.model-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 0 8px 12px;
+}
+.role-label {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.role-hint {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+}
+.model-row > .select { margin-left: 12px; width: calc(100% - 12px); }
+.adapters {
+  margin: 12px 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ---- adapter cards (nested under Adapted) ---- */
+.adapter-card {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  transition: border-color 160ms ease;
+}
+.adapter-card:hover { border-color: var(--line-strong); }
+.adapter-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.adapter-kind {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.adapter-kind .tag {
+  margin-left: 6px;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--ink-dim);
+  letter-spacing: 0.06em;
+}
+.add-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: white;
+  background: var(--accent);
+  padding: 5px 12px;
+  border-radius: 999px;
+  transition: all 160ms ease;
+  box-shadow: 0 2px 6px rgba(77, 157, 224, 0.30);
+}
+.add-btn:hover {
+  background: var(--accent-deep);
+  box-shadow: 0 4px 14px rgba(77, 157, 224, 0.45);
+  transform: translateY(-1px);
+}
+.adapter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.adapter-empty {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink-faint);
+  padding: 4px 0;
+}
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px 7px 14px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  transition: border-color 160ms ease;
+}
+.chip:hover { border-color: var(--accent); }
+.chip .nm {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chip .w {
+  width: 48px;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-deep);
+  background: transparent;
+  border: none;
+}
+.chip .x {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--ink-dim);
+  padding: 0 4px;
+  cursor: pointer;
+}
+.chip .x:hover { color: var(--err); }
+
+.select {
+  width: 100%;
+  background-color: white;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 32px 9px 12px;
+  font-family: var(--sans);
+  font-size: 13px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a91ad' stroke-width='2.2' stroke-linecap='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+  transition: border-color 160ms ease;
+}
+.select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* ---- CNet preset thumbnails ---- */
+.cnet-body { margin-top: 10px; }
+.preset-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+  min-height: 80px;
+}
+.preset-row:empty { min-height: 0; }
+.preset-thumb[hidden] { display: none !important; }
+.preset-thumb {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  min-height: 72px;            /* fallback in case aspect-ratio isn't applied */
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f0f4fa;
+  cursor: pointer;
+  padding: 0;
+  transition: all 160ms ease;
+}
+.preset-thumb svg,
+.preset-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.preset-thumb:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(77, 157, 224, 0.20);
+}
+.preset-thumb.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.preset-thumb .check-mark {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 16px; height: 16px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+}
+.preset-thumb.active .check-mark { display: flex; }
+
+.dropzone {
+  display: block;
+  padding: 12px 10px;
+  border: 1.5px dashed var(--line-strong);
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 200ms ease;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-dim);
+  background: white;
+}
+.dropzone:hover, .dropzone.drag {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+}
+.dropzone img {
+  display: block;
+  margin: 0 auto;
+  max-height: 90px;
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+/* ---- λ block: slider only, no numbers ---- */
+.lambda-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 18px 16px;
+  box-shadow: 0 2px 6px rgba(31, 71, 119, 0.04);
+}
+.dial-row {
+  position: relative;
+  padding: 4px 4px 14px;
+}
+.dial {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 6px;
+  background: linear-gradient(90deg,
+    var(--bg-elev-2) 0%,
+    var(--mint)      20%,
+    var(--accent)    50%,
+    var(--pink)      80%,
+    #f7a4be          100%);
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(31, 71, 119, 0.08);
+}
+.dial::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--accent);
+  cursor: pointer;
+  box-shadow: 0 0 0 4px var(--accent-soft),
+              0 4px 14px rgba(77, 157, 224, 0.45);
+  transition: transform 140ms ease, box-shadow 200ms ease;
+}
+.dial::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 6px var(--accent-soft),
+              0 6px 22px rgba(77, 157, 224, 0.55);
+}
+.dial::-webkit-slider-thumb:active { transform: scale(1.04); }
+.dial::-moz-range-thumb {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--accent);
+  cursor: pointer;
+}
+.dial-ticks {
+  position: relative;
+  margin-top: 12px;
+  height: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+}
+.dial-ticks span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+/* ---- advanced ---- */
+.advanced {
+  margin: 0 0 22px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: white;
+  overflow: hidden;
+}
+.advanced > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  user-select: none;
+  transition: background 160ms ease;
+}
+.advanced > summary::-webkit-details-marker { display: none; }
+.advanced > summary:hover { background: var(--bg-elev-2); }
+.advanced > summary .chev {
+  margin-left: auto;
+  font-family: var(--sans);
+  font-size: 18px;
+  color: var(--ink-dim);
+  transition: transform 220ms ease, color 160ms ease;
+}
+.advanced[open] > summary .chev { transform: rotate(90deg); color: var(--accent); }
+.advanced-body {
+  padding: 10px 16px 16px;
+  border-top: 1px solid var(--line);
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+.field { display: flex; flex-direction: column; min-width: 0; }
+.field-label {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+.input {
+  width: 100%;
+  min-width: 0;
+  background: white;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-family: var(--mono);
+  font-size: 13px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.field-row { display: flex; gap: 6px; }
+.field-row .input { flex: 1; }
+
+/* input with absolutely-positioned suffix icon (keeps grid alignment) */
+.input-with-suffix {
+  position: relative;
+}
+.input-with-suffix .input { width: 100%; padding-right: 34px; }
+.input-suffix {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px; height: 26px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ink-dim);
+  font-size: 13px;
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: all 140ms ease;
+}
+.input-suffix:hover { background: var(--accent-soft); color: var(--accent-deep); }
+
+.icon-btn {
+  width: 36px; height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: white;
+  color: var(--ink-dim);
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  transition: all 160ms ease;
+}
+.icon-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ---- action bar ---- */
+.action-bar {
+  padding: 16px 22px 20px;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.85);
+}
+.btn-primary {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 15px 18px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--pink) 100%);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.01em;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 320ms ease;
+  box-shadow: 0 8px 24px rgba(77, 157, 224, 0.40),
+              0 2px 6px  rgba(77, 157, 224, 0.20),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg,
+    transparent 30%,
+    rgba(255,255,255,0.35) 50%,
+    transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 900ms ease;
+}
+.btn-primary:hover {
+  background-position: 100% 50%;
+  box-shadow: 0 14px 32px rgba(77, 157, 224, 0.55),
+              0 4px 10px  rgba(77, 157, 224, 0.25),
+              inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+.btn-primary:hover::after { transform: translateX(120%); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary:disabled { opacity: 0.55; cursor: progress; transform: none; }
+.btn-primary .kbd {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.95);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  padding-left: 12px;
+}
+
+/* ============== toast ============== */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translate(-50%, 30px);
+  opacity: 0;
+  pointer-events: none;
+  background: white;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  padding: 12px 22px;
+  font-family: var(--sans);
+  font-size: 14px;
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(31, 71, 119, 0.18);
+  transition: transform 240ms ease, opacity 240ms ease;
+  z-index: 200;
+  max-width: 80vw;
+}
+.toast:empty { display: none; }    /* before any message has fired */
+.toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.toast.ok  { border-left-color: var(--ok); }
+.toast.err { border-left-color: var(--err); }
+
+/* ============== utility ============== */
+.hidden { display: none !important; }
+
+/* ============== responsive ============== */
+@media (max-width: 980px) {
+  .frame {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px 50vh 1fr;
+  }
+  .rail { border-left: none; border-top: 1px solid var(--line); }
+  .canvas-wrap { padding: 24px; }
+}
+
+/* load-in stagger */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.masthead    { animation: rise 480ms 0ms   ease both; }
+.stage       { animation: rise 480ms 80ms  ease both; }
+.rail        { animation: rise 480ms 160ms ease both; }
+</style>
+</head>
+<body>
+
+<!-- ============== background art: clouds + sparkles ============== -->
+<div class="bg-art" aria-hidden="true">
+  <!-- Cloud 1 -->
+  <svg class="cloud-1" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 30 70 Q 30 40 60 40 Q 70 20 95 25 Q 115 10 140 25 Q 170 25 175 50 Q 195 55 190 75 Q 180 90 150 88 L 50 88 Q 25 88 30 70 Z"
+          fill="#ffffff" stroke="#cfe2f3" stroke-width="1.5" />
+  </svg>
+  <!-- Cloud 2 -->
+  <svg class="cloud-2" viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 25 75 Q 30 45 60 45 Q 70 20 105 25 Q 130 10 155 30 Q 185 25 195 55 Q 215 60 205 85 Q 195 100 160 95 L 55 95 Q 20 95 25 75 Z"
+          fill="#ffffff" stroke="#dceaf6" stroke-width="1.5" />
+  </svg>
+  <!-- Cloud 3 -->
+  <svg class="cloud-3" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 30 70 Q 30 40 60 40 Q 70 20 95 25 Q 115 10 140 25 Q 170 25 175 50 Q 195 55 190 75 Q 180 90 150 88 L 50 88 Q 25 88 30 70 Z"
+          fill="#fdf5e6" stroke="#f5e6c8" stroke-width="1.5" />
+  </svg>
+  <!-- Cloud 4 -->
+  <svg class="cloud-4" viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 25 75 Q 30 45 60 45 Q 70 20 105 25 Q 130 10 155 30 Q 185 25 195 55 Q 215 60 205 85 Q 195 100 160 95 L 55 95 Q 20 95 25 75 Z"
+          fill="#ffffff" stroke="#cfe2f3" stroke-width="1.5" />
+  </svg>
+
+  <!-- Sparkles -->
+  <svg class="sparkle s1" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 0 L11.5 8.5 L20 10 L11.5 11.5 L10 20 L8.5 11.5 L0 10 L8.5 8.5 Z"
+          fill="#ffb3c8" />
+  </svg>
+  <svg class="sparkle s2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 0 L11.5 8.5 L20 10 L11.5 11.5 L10 20 L8.5 11.5 L0 10 L8.5 8.5 Z"
+          fill="#4d9de0" />
+  </svg>
+  <svg class="sparkle s3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 0 L11.5 8.5 L20 10 L11.5 11.5 L10 20 L8.5 11.5 L0 10 L8.5 8.5 Z"
+          fill="#c8b6ff" />
+  </svg>
+  <svg class="sparkle s4" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 0 L11.5 8.5 L20 10 L11.5 11.5 L10 20 L8.5 11.5 L0 10 L8.5 8.5 Z"
+          fill="#ffb627" />
+  </svg>
+  <svg class="sparkle s5" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 0 L11.5 8.5 L20 10 L11.5 11.5 L10 20 L8.5 11.5 L0 10 L8.5 8.5 Z"
+          fill="#a8e6cf" />
+  </svg>
+</div>
+
+<div class="frame">
+
+  <!-- ================= masthead ================= -->
+  <header class="masthead">
+    <div class="brand">
+      <div class="brand-icon">Δ</div>
+      <span class="brand-mark">Delta Sampling</span>
+      <span class="brand-sub">Studio · 2026</span>
+    </div>
+    <div class="masthead-meta">
+      <span class="status" id="status">
+        <span class="dot"></span><span class="status-text">checking…</span>
+      </span>
+    </div>
+  </header>
+
+  <!-- ================= stage ================= -->
+  <main class="stage">
+    <div class="canvas-wrap">
+      <div class="canvas" id="canvas">
+
+        <div class="canvas-empty" id="canvasEmpty">
+          <div class="delta-glyph">Δ</div>
+          <h2>A training-free transfer</h2>
+          <p>Compose the adapter, press <kbd>⌘ ↵</kbd> to begin</p>
+        </div>
+
+        <div class="canvas-loading hidden" id="canvasLoading">
+          <div class="scope"><div class="scope-sweep"></div></div>
+          <div class="loading-label" id="loadingLabel">Preparing workflow</div>
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="progress-step" id="progressStep">0 / 20</div>
+        </div>
+
+        <img id="resultImg" class="result-img hidden" alt="generated" />
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= rail ================= -->
+  <aside class="rail">
+    <div class="rail-body">
+
+      <!-- 01 Prompt -->
+      <section class="block">
+        <div class="block-head">
+          <span class="block-num">01</span>
+          <h3 class="block-title">Prompt</h3>
+          <span class="block-hint">describe</span>
+        </div>
+        <textarea id="prompt" class="prompt-input" rows="3"
+          placeholder="A misty mountain at dawn, cinematic photograph, 8k…">bird, masterpiece, best quality, traditional chinese ink painting, modelshoot style, peaceful, wuchangshuo</textarea>
+      </section>
+
+      <span class="rule"></span>
+
+      <!-- 02 Models -->
+      <section class="block">
+        <div class="block-head">
+          <span class="block-num">02</span>
+          <h3 class="block-title">Models</h3>
+        </div>
+
+        <div class="model-stack">
+
+          <!-- Base -->
+          <div class="model-row" data-role="base">
+            <div class="model-row-head">
+              <span class="role-label">Base</span>
+            </div>
+            <select id="baseModel" class="select">
+              <option value="v1-5-pruned-emaonly.safetensors">SD 1.5 · v1-5-pruned-emaonly</option>
+            </select>
+          </div>
+
+          <!-- Adapted (the heart) -->
+          <div class="model-row" data-role="adapted">
+            <div class="model-row-head">
+              <span class="role-label">Adapted</span>
+            </div>
+            <select id="adaptedModel" class="select">
+              <option value="v1-5-pruned-emaonly.safetensors">SD 1.5 (base)</option>
+              <option value="Realistic_Vision_V4.0.safetensors">Realistic Vision v4.0</option>
+              <option value="dreamshaper_8.safetensors">DreamShaper 8</option>
+              <option value="anythingrealism_v10.safetensors">Anything Realism v1.0</option>
+              <option value="chilloutmix_NiPrunedFp16Fix.safetensors" selected>ChilloutMix Ni</option>
+              <option value="CounterfeitV30_v30.safetensors">Counterfeit v3.0</option>
+              <option value="dollymix_v10.safetensors">DollyMix v1.0</option>
+              <option value="photon_v1.safetensors">Photon v1.0</option>
+              <option value="revAnimated_v2Pruned.safetensors">RevAnimated v2</option>
+            </select>
+
+            <!-- Sub-adapters: LoRA + LyCORIS + ControlNet -->
+            <div class="adapters">
+
+              <div class="adapter-card">
+                <div class="adapter-head">
+                  <span class="adapter-kind">LoRA</span>
+                  <select id="loraPick" class="select" style="flex:1; margin:0 8px; font-size:11px; min-width:0;">
+                    <option value="">— pick LoRA —</option>
+                    <option value="30sTechnicolorMovieV2SD1.safetensors">30s Technicolor Movie</option>
+                    <option value="animeoutlineV4_16.safetensors">Anime Outline V4</option>
+                    <option value="blindbox_v1_mix.safetensors">BlindBox Mix</option>
+                    <option value="Block building.safetensors">Block Building</option>
+                    <option value="miniature_V1.safetensors">Miniature V1</option>
+                    <option value="MoXinV1.safetensors">MoXin V1</option>
+                    <option value="NicolasPoussin.safetensors">Nicolas Poussin</option>
+                    <option value="PixelArtV3SD1.safetensors">Pixel Art V3</option>
+                    <option value="xrs2.0.safetensors">xrs 2.0</option>
+                    <option value="YaeMiko_Test.safetensors">Yae Miko</option>
+                    <option value="动漫线稿_V1.0.safetensors">动漫线稿 V1</option>
+                    <option value="线稿v2.safetensors">线稿 V2</option>
+                  </select>
+                  <button class="add-btn" id="addLora">+</button>
+                </div>
+                <div class="adapter-list" id="loraList">
+                  <div class="adapter-empty">no LoRA loaded</div>
+                </div>
+              </div>
+
+              <div class="adapter-card" style="display:none;">
+                <div class="adapter-head">
+                  <span class="adapter-kind">LyCORIS</span>
+                  <button class="add-btn" id="addLyco">+ add</button>
+                </div>
+                <div class="adapter-list" id="lycoList">
+                  <div class="adapter-empty">no LyCORIS loaded</div>
+                </div>
+              </div>
+
+              <div class="adapter-card">
+                <div class="adapter-head">
+                  <span class="adapter-kind">ControlNet</span>
+                  <select id="cnetType" class="select" style="width: 130px;">
+                    <option value="">none</option>
+                    <option value="canny">canny</option>
+                    <option value="depth" selected>depth</option>
+                    <option value="normal">normal</option>
+                    <option value="pose">pose</option>
+                    <option value="seg">seg</option>
+                  </select>
+                </div>
+                <div class="cnet-body" id="cnetBody">
+                  <!-- All 20 presets are pre-rendered inline. JS toggles [hidden]
+                       based on cnetType, so PNGs are guaranteed in DOM. -->
+                  <div class="preset-row" id="presetRow">
+                    <button type="button" class="preset-thumb" data-cnet="canny" data-name="canny_1.png" hidden><img src="presets/canny_1.png?v=41" alt="canny 1" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="canny" data-name="canny_2.png" hidden><img src="presets/canny_2.png?v=41" alt="canny 2" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="canny" data-name="canny_3.png" hidden><img src="presets/canny_3.png?v=41" alt="canny 3" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="canny" data-name="canny_4.png" hidden><img src="presets/canny_4.png?v=41" alt="canny 4" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+
+                    <button type="button" class="preset-thumb" data-cnet="depth" data-name="depth_1.png" hidden><img src="presets/depth_1.png?v=41" alt="depth 1" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="depth" data-name="depth_2.png" hidden><img src="presets/depth_2.png?v=41" alt="depth 2" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="depth" data-name="depth_3.png" hidden><img src="presets/depth_3.png?v=41" alt="depth 3" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="depth" data-name="depth_4.png" hidden><img src="presets/depth_4.png?v=41" alt="depth 4" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+
+                    <button type="button" class="preset-thumb" data-cnet="normal" data-name="normal_1.png" hidden><img src="presets/normal_1.png?v=41" alt="normal 1" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="normal" data-name="normal_2.png" hidden><img src="presets/normal_2.png?v=41" alt="normal 2" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="normal" data-name="normal_3.png" hidden><img src="presets/normal_3.png?v=41" alt="normal 3" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="normal" data-name="normal_4.png" hidden><img src="presets/normal_4.png?v=41" alt="normal 4" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+
+                    <button type="button" class="preset-thumb" data-cnet="pose" data-name="pose_1.png" hidden><img src="presets/pose_1.png?v=41" alt="pose 1" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="pose" data-name="pose_2.png" hidden><img src="presets/pose_2.png?v=41" alt="pose 2" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="pose" data-name="pose_3.png" hidden><img src="presets/pose_3.png?v=41" alt="pose 3" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="pose" data-name="pose_4.png" hidden><img src="presets/pose_4.png?v=41" alt="pose 4" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+
+                    <button type="button" class="preset-thumb" data-cnet="seg" data-name="seg_1.png" hidden><img src="presets/seg_1.png?v=41" alt="seg 1" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="seg" data-name="seg_2.png" hidden><img src="presets/seg_2.png?v=41" alt="seg 2" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="seg" data-name="seg_3.png" hidden><img src="presets/seg_3.png?v=41" alt="seg 3" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                    <button type="button" class="preset-thumb" data-cnet="seg" data-name="seg_4.png" hidden><img src="presets/seg_4.png?v=41" alt="seg 4" style="width:100%;height:100%;display:block;object-fit:cover" /><span class="check-mark">✓</span></button>
+                  </div>
+                  <label class="dropzone" id="cnetDrop">
+                    <input type="file" id="cnetFile" accept="image/*" hidden />
+                    <span id="cnetDropInner">drop control image, or click to upload</span>
+                  </label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Target -->
+          <div class="model-row" data-role="target">
+            <div class="model-row-head">
+              <span class="role-label">Target</span>
+            </div>
+            <select id="targetModel" class="select">
+              <option value="v2-1_768-ema-pruned.safetensors">SD 2.1 · v2-1_768-ema-pruned</option>
+            </select>
+          </div>
+
+        </div>
+      </section>
+
+      <span class="rule"></span>
+
+      <!-- 03 Delta strength — slider only -->
+      <section class="block">
+        <div class="block-head">
+          <span class="block-num">03</span>
+          <h3 class="block-title">Delta strength</h3>
+        </div>
+        <div class="lambda-card">
+          <div class="dial-row">
+            <input type="range" id="lambdaSlider" class="dial"
+              min="0" max="3" step="0.05" value="1.0" />
+            <div class="dial-ticks">
+              <span style="left: 0%;">0</span>
+              <span style="left: 33.33%;">1</span>
+              <span style="left: 66.66%;">2</span>
+              <span style="left: 100%;">3</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 04 Advanced -->
+      <details class="advanced">
+        <summary>
+          <span class="block-num">04</span>
+          <h3 class="block-title">Advanced</h3>
+          <span class="chev">›</span>
+        </summary>
+        <div class="advanced-body">
+          <div class="grid-2">
+            <div class="field">
+              <label class="field-label">Seed</label>
+              <div class="input-with-suffix">
+                <input type="number" id="seed" class="input" value="42" />
+                <button class="input-suffix" id="randomSeed" title="randomize">↻</button>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label">Steps</label>
+              <input type="number" id="steps" class="input" value="20" min="1" max="150" />
+            </div>
+            <div class="field">
+              <label class="field-label">CFG</label>
+              <input type="number" id="cfg" class="input" value="7" step="0.5" />
+            </div>
+            <div class="field">
+              <label class="field-label">CNet strength</label>
+              <input type="number" id="cnetStrength" class="input" value="1.0" step="0.05" />
+            </div>
+            <div class="field">
+              <label class="field-label">Sampler</label>
+              <select id="sampler" class="select">
+                <option selected>euler</option>
+                <option>euler_ancestral</option>
+                <option>dpmpp_2m</option>
+                <option>dpmpp_2m_sde</option>
+                <option>dpmpp_sde</option>
+                <option>heun</option>
+                <option>uni_pc</option>
+                <option>ddim</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label">Scheduler</label>
+              <select id="scheduler" class="select">
+                <option selected>normal</option>
+                <option>karras</option>
+                <option>exponential</option>
+                <option>sgm_uniform</option>
+                <option>simple</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label">Width</label>
+              <input type="number" id="width" class="input" value="512" step="8" />
+            </div>
+            <div class="field">
+              <label class="field-label">Height</label>
+              <input type="number" id="height" class="input" value="512" step="8" />
+            </div>
+          </div>
+        </div>
+      </details>
+
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-primary" id="generateBtn">
+        <span>Generate</span>
+        <span class="kbd">⌘ ↵</span>
+      </button>
+    </div>
+  </aside>
+
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js?v=44"></script>
+</body>
+</html>
