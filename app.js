@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://starter-monitors-careful-wax.trycloudflare.com",
+  COMFY_URL: "https://bring-naval-guest-kitchen.trycloudflare.com",
   hasBackend: false,
 };
 
