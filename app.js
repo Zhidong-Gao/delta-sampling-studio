@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://limitations-cargo-illustrated-examination.trycloudflare.com",
+  COMFY_URL: "https://respondents-troops-advocate-ave.trycloudflare.com",
   hasBackend: false,
 };
 
