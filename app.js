@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://bring-naval-guest-kitchen.trycloudflare.com",
+  COMFY_URL: "https://limitations-cargo-illustrated-examination.trycloudflare.com",
   hasBackend: false,
 };
 
