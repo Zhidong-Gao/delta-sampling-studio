@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://nearest-install-infant-fill.trycloudflare.com",
+  COMFY_URL: "https://mins-suppose-replacing-instrumentation.trycloudflare.com",
   hasBackend: false,
 };
 
