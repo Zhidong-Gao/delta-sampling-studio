@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://scuba-nicholas-html-measured.trycloudflare.com",
+  COMFY_URL: "https://broadway-effects-leone-materials.trycloudflare.com",
   hasBackend: false,
 };
 
