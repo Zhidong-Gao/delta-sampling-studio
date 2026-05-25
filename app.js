@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://broadway-effects-leone-materials.trycloudflare.com",
+  COMFY_URL: "https://learning-tricks-california-stunning.trycloudflare.com",
   hasBackend: false,
 };
 
