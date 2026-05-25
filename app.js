@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://lambda-delayed-ser-frequencies.trycloudflare.com",
+  COMFY_URL: "https://played-anyway-arnold-save.trycloudflare.com",
   hasBackend: false,
 };
 
