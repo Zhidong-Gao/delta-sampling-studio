@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://learning-tricks-california-stunning.trycloudflare.com",
+  COMFY_URL: "https://lambda-delayed-ser-frequencies.trycloudflare.com",
   hasBackend: false,
 };
 
