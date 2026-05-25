@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://finance-exemption-voltage-tiffany.trycloudflare.com",
+  COMFY_URL: "https://scuba-nicholas-html-measured.trycloudflare.com",
   hasBackend: false,
 };
 
