@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://played-anyway-arnold-save.trycloudflare.com",
+  COMFY_URL: "https://nearest-install-infant-fill.trycloudflare.com",
   hasBackend: false,
 };
 
