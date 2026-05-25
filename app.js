@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://tuesday-supreme-subsidiaries-elvis.trycloudflare.com",
+  COMFY_URL: "https://finance-exemption-voltage-tiffany.trycloudflare.com",
   hasBackend: false,
 };
 
