@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://respondents-troops-advocate-ave.trycloudflare.com",
+  COMFY_URL: "https://tuesday-supreme-subsidiaries-elvis.trycloudflare.com",
   hasBackend: false,
 };
 
