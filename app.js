@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://mins-suppose-replacing-instrumentation.trycloudflare.com",
+  COMFY_URL: "https://-kentucky-replace-owns.trycloudflare.com",
   hasBackend: false,
 };
 
