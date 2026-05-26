@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://singing-volleyball-premiere-full.trycloudflare.com",
+  COMFY_URL: "https://liverpool-appraisal-campaigns-sheer.trycloudflare.com",
   hasBackend: false,
 };
 
