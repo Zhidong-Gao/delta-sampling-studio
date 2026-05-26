@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://push-deadline-distances-accommodate.trycloudflare.com",
+  COMFY_URL: "https://api.trycloudflare.com",
   hasBackend: false,
 };
 
