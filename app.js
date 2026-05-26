@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://liverpool-appraisal-campaigns-sheer.trycloudflare.com",
+  COMFY_URL: "https://academics-berlin-robbie-tyler.trycloudflare.com",
   hasBackend: false,
 };
 
