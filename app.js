@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://-kentucky-replace-owns.trycloudflare.com",
+  COMFY_URL: "https://push-deadline-distances-accommodate.trycloudflare.com",
   hasBackend: false,
 };
 
