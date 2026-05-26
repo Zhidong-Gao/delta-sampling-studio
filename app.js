@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://api.trycloudflare.com",
+  COMFY_URL: "https://devon-flour-laws-sacrifice.trycloudflare.com",
   hasBackend: false,
 };
 
