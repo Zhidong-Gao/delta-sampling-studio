@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://api.trycloudflare.com",
+  COMFY_URL: "https://submitting-door-shoulder-dont.trycloudflare.com",
   hasBackend: false,
 };
 
