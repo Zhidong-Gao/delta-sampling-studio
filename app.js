@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://continuing-significant-there-tucson.trycloudflare.com",
+  COMFY_URL: "https://singing-volleyball-premiere-full.trycloudflare.com",
   hasBackend: false,
 };
 
