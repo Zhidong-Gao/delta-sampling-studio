@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://cave-powder-pool-dimension.trycloudflare.com",
+  COMFY_URL: "https://experiencing-legitimate-pen-arg.trycloudflare.com",
   hasBackend: false,
 };
 
