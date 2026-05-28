@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://spokesman-intellectual-restricted-appreciation.trycloudflare.com",
+  COMFY_URL: "https://lucy-models-graph-hospitals.trycloudflare.com",
   hasBackend: false,
 };
 
