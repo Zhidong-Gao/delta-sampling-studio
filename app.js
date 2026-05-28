@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://academics-berlin-robbie-tyler.trycloudflare.com",
+  COMFY_URL: "https://spokesman-intellectual-restricted-appreciation.trycloudflare.com",
   hasBackend: false,
 };
 
