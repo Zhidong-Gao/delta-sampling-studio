@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://lucy-models-graph-hospitals.trycloudflare.com",
+  COMFY_URL: "https://cave-powder-pool-dimension.trycloudflare.com",
   hasBackend: false,
 };
 
