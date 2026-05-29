@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://individually-look-hydrocodone-translated.trycloudflare.com",
+  COMFY_URL: "https://control-suddenly-unlock-exec.trycloudflare.com",
   hasBackend: false,
 };
 
