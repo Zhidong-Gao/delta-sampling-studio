@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://experiencing-legitimate-pen-arg.trycloudflare.com",
+  COMFY_URL: "https://individually-look-hydrocodone-translated.trycloudflare.com",
   hasBackend: false,
 };
 
