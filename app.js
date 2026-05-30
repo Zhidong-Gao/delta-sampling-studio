@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://twice-counsel-ross-advertise.trycloudflare.com",
+  COMFY_URL: "https://assign-showtimes-pros-horn.trycloudflare.com",
   hasBackend: false,
 };
 
