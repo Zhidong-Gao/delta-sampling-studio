@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://control-suddenly-unlock-exec.trycloudflare.com",
+  COMFY_URL: "https://heather-shell-environment-interfaces.trycloudflare.com",
   hasBackend: false,
 };
 
