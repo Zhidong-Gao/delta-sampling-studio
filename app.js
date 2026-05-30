@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://heather-shell-environment-interfaces.trycloudflare.com",
+  COMFY_URL: "https://twice-counsel-ross-advertise.trycloudflare.com",
   hasBackend: false,
 };
 
