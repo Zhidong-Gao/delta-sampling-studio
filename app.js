@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://way-departure-forecast-scanned.trycloudflare.com",
+  COMFY_URL: "https://subdivision-verse-responsible-when.trycloudflare.com",
   hasBackend: false,
 };
 
