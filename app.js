@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://assign-showtimes-pros-horn.trycloudflare.com",
+  COMFY_URL: "https://way-departure-forecast-scanned.trycloudflare.com",
   hasBackend: false,
 };
 
