@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://subdivision-verse-responsible-when.trycloudflare.com",
+  COMFY_URL: "https://tired-contributed-collective-valley.trycloudflare.com",
   hasBackend: false,
 };
 
