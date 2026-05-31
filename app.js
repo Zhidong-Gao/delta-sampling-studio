@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://tired-contributed-collective-valley.trycloudflare.com",
+  COMFY_URL: "https://coast-simultaneously-files-groundwater.trycloudflare.com",
   hasBackend: false,
 };
 
