@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://you-reports-explicitly-registry.trycloudflare.com",
+  COMFY_URL: "https://olympics-start-appeared-filtering.trycloudflare.com",
   hasBackend: false,
 };
 
