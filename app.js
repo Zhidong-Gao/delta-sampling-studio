@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://industrial-shopper-means-posting.trycloudflare.com",
+  COMFY_URL: "https://motors-wondering-managing-translate.trycloudflare.com",
   hasBackend: false,
 };
 
