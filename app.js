@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://coast-simultaneously-files-groundwater.trycloudflare.com",
+  COMFY_URL: "https://you-reports-explicitly-registry.trycloudflare.com",
   hasBackend: false,
 };
 
