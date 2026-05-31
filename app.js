@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://olympics-start-appeared-filtering.trycloudflare.com",
+  COMFY_URL: "https://industrial-shopper-means-posting.trycloudflare.com",
   hasBackend: false,
 };
 
