@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://had-granted-sky-wide.trycloudflare.com",
+  COMFY_URL: "https://facial-intro-achieving-intelligent.trycloudflare.com",
   hasBackend: false,
 };
 
