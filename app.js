@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://motors-wondering-managing-translate.trycloudflare.com",
+  COMFY_URL: "https://had-granted-sky-wide.trycloudflare.com",
   hasBackend: false,
 };
 
