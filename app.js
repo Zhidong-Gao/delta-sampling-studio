@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://cents-reproduce-networking-estimation.trycloudflare.com",
+  COMFY_URL: "https://far-weight-really-hawk.trycloudflare.com",
   hasBackend: false,
 };
 
