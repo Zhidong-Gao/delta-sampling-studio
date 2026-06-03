@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://toolbox-unix-employers-margin.trycloudflare.com",
+  COMFY_URL: "https://everywhere-locator-toner-binary.trycloudflare.com",
   hasBackend: false,
 };
 
