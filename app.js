@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://watershed-centered-chest-brad.trycloudflare.com",
+  COMFY_URL: "https://constant-women-adds-mae.trycloudflare.com",
   hasBackend: false,
 };
 
