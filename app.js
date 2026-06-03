@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://legends-obituaries-ext-lime.trycloudflare.com",
+  COMFY_URL: "https://zip-yellow-character-choosing.trycloudflare.com",
   hasBackend: false,
 };
 
