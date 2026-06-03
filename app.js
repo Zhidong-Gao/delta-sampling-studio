@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://constant-women-adds-mae.trycloudflare.com",
+  COMFY_URL: "https://goto-active-skins-devoted.trycloudflare.com",
   hasBackend: false,
 };
 
