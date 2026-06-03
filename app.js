@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://wheel-actors-whatever-commit.trycloudflare.com",
+  COMFY_URL: "https://tubes-concord-antibody-zshops.trycloudflare.com",
   hasBackend: false,
 };
 
