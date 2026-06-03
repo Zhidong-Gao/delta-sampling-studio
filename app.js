@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://tubes-concord-antibody-zshops.trycloudflare.com",
+  COMFY_URL: "https://workflow-parameters-invitation-win.trycloudflare.com",
   hasBackend: false,
 };
 
