@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://zip-yellow-character-choosing.trycloudflare.com",
+  COMFY_URL: "https://debian-murray-powerpoint-collection.trycloudflare.com",
   hasBackend: false,
 };
 
