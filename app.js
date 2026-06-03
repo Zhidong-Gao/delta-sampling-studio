@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://workflow-parameters-invitation-win.trycloudflare.com",
+  COMFY_URL: "https://consistency-faster-hughes-engineering.trycloudflare.com",
   hasBackend: false,
 };
 
