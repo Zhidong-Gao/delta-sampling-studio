@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://goto-active-skins-devoted.trycloudflare.com",
+  COMFY_URL: "https://wants-margin-information-publisher.trycloudflare.com",
   hasBackend: false,
 };
 
