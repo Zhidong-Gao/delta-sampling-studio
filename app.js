@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://attract-accommodations-publicity-drawing.trycloudflare.com",
+  COMFY_URL: "https://legends-obituaries-ext-lime.trycloudflare.com",
   hasBackend: false,
 };
 
