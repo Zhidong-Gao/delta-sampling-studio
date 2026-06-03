@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://kim-scientific-sponsorship-working.trycloudflare.com",
+  COMFY_URL: "https://cents-reproduce-networking-estimation.trycloudflare.com",
   hasBackend: false,
 };
 
