@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://wants-margin-information-publisher.trycloudflare.com",
+  COMFY_URL: "https://cook-tucson-reaching-universities.trycloudflare.com",
   hasBackend: false,
 };
 
