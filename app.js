@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://far-weight-really-hawk.trycloudflare.com",
+  COMFY_URL: "https://paragraphs-hosted-approaches-clips.trycloudflare.com",
   hasBackend: false,
 };
 
