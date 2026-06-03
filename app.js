@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://census-nine-wilson-happened.trycloudflare.com",
+  COMFY_URL: "https://watershed-centered-chest-brad.trycloudflare.com",
   hasBackend: false,
 };
 
