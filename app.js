@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://consistency-faster-hughes-engineering.trycloudflare.com",
+  COMFY_URL: "https://attract-accommodations-publicity-drawing.trycloudflare.com",
   hasBackend: false,
 };
 
