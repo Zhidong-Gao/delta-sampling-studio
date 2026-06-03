@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://paso-habitat-dealtime-widely.trycloudflare.com",
+  COMFY_URL: "https://comprehensive-usb-require-outline.trycloudflare.com",
   hasBackend: false,
 };
 
