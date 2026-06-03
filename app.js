@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://books-especially-declare-level.trycloudflare.com",
+  COMFY_URL: "https://fewer-nearest-rebates-formerly.trycloudflare.com",
   hasBackend: false,
 };
 
