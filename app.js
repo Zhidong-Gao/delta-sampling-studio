@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://fewer-nearest-rebates-formerly.trycloudflare.com",
+  COMFY_URL: "https://census-nine-wilson-happened.trycloudflare.com",
   hasBackend: false,
 };
 
