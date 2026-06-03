@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://debian-murray-powerpoint-collection.trycloudflare.com",
+  COMFY_URL: "https://proceedings-officials-cassette-delays.trycloudflare.com",
   hasBackend: false,
 };
 
