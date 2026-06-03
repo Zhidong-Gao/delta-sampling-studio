@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://paragraphs-hosted-approaches-clips.trycloudflare.com",
+  COMFY_URL: "https://books-especially-declare-level.trycloudflare.com",
   hasBackend: false,
 };
 
