@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://everywhere-locator-toner-binary.trycloudflare.com",
+  COMFY_URL: "https://paso-habitat-dealtime-widely.trycloudflare.com",
   hasBackend: false,
 };
 
