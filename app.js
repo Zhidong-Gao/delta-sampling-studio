@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://proceedings-officials-cassette-delays.trycloudflare.com",
+  COMFY_URL: "https://kim-scientific-sponsorship-working.trycloudflare.com",
   hasBackend: false,
 };
 
