@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://facial-intro-achieving-intelligent.trycloudflare.com",
+  COMFY_URL: "https://wheel-actors-whatever-commit.trycloudflare.com",
   hasBackend: false,
 };
 
