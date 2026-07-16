@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://infringement-ken-exchanges-promotions.trycloudflare.com",
+  COMFY_URL: "https://here-amounts-described-fifth.trycloudflare.com",
   hasBackend: false,
 };
 
