@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://reaction-latter-such-modes.trycloudflare.com",
+  COMFY_URL: "https://preceding-investor-dollar-pix.trycloudflare.com",
   hasBackend: false,
 };
 
