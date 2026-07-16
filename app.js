@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://characteristic-maintained-actions-tools.trycloudflare.com",
+  COMFY_URL: "https://hearings-wind-tasks-yields.trycloudflare.com",
   hasBackend: false,
 };
 
