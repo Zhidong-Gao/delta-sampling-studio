@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://str-medicines-competitions-cylinder.trycloudflare.com",
+  COMFY_URL: "https://erp-powers-incorporate-semiconductor.trycloudflare.com",
   hasBackend: false,
 };
 
