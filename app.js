@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://erp-powers-incorporate-semiconductor.trycloudflare.com",
+  COMFY_URL: "https://necessarily-assist-dig-reward.trycloudflare.com",
   hasBackend: false,
 };
 
