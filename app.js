@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://restore-bracket-analysts-effectively.trycloudflare.com",
+  COMFY_URL: "https://homework-info-elementary-finds.trycloudflare.com",
   hasBackend: false,
 };
 
