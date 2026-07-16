@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://brussels-scotland-however-galaxy.trycloudflare.com",
+  COMFY_URL: "https://zone-stainless-hopefully-makers.trycloudflare.com",
   hasBackend: false,
 };
 
