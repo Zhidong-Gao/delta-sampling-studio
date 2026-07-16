@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://api.trycloudflare.com",
+  COMFY_URL: "https://coins-forty-batman-fashion.trycloudflare.com",
   hasBackend: false,
 };
 
