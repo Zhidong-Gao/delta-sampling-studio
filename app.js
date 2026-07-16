@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://mozilla-triumph-berkeley-happening.trycloudflare.com",
+  COMFY_URL: "https://known-garcia-rebel-tomato.trycloudflare.com",
   hasBackend: false,
 };
 
