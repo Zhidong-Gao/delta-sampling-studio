@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://ball-side-millennium-narrative.trycloudflare.com",
+  COMFY_URL: "https://restore-bracket-analysts-effectively.trycloudflare.com",
   hasBackend: false,
 };
 
