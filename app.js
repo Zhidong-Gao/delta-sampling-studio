@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://chose-directories-solution-respectively.trycloudflare.com",
+  COMFY_URL: "https://temporarily-allen-casey-fairly.trycloudflare.com",
   hasBackend: false,
 };
 
