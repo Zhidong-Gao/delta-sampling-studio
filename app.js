@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://smart-metals-largely-displays.trycloudflare.com",
+  COMFY_URL: "https://milton-prefix-publications-firefox.trycloudflare.com",
   hasBackend: false,
 };
 
