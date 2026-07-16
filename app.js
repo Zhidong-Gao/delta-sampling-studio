@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://here-amounts-described-fifth.trycloudflare.com",
+  COMFY_URL: "https://starsmerchant-half-preventing-happened.trycloudflare.com",
   hasBackend: false,
 };
 
