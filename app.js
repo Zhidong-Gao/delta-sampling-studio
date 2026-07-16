@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://browsing-divisions-completing-hometown.trycloudflare.com",
+  COMFY_URL: "https://ceramic-revolutionary-specially-energy.trycloudflare.com",
   hasBackend: false,
 };
 
