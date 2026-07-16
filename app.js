@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://presentations-catalogs-bless-soa.trycloudflare.com",
+  COMFY_URL: "https://cream-acre-patients-gis.trycloudflare.com",
   hasBackend: false,
 };
 
