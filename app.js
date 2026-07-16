@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://dolls-mouth-roberts-david.trycloudflare.com",
+  COMFY_URL: "https://chose-directories-solution-respectively.trycloudflare.com",
   hasBackend: false,
 };
 
