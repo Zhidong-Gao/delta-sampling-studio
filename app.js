@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://slope-justice-trail-barriers.trycloudflare.com",
+  COMFY_URL: "https://piece-grows-cookie-carolina.trycloudflare.com",
   hasBackend: false,
 };
 
