@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://gradually-wisdom-formerly-felt.trycloudflare.com",
+  COMFY_URL: "https://big-wma-volumes-correct.trycloudflare.com",
   hasBackend: false,
 };
 
