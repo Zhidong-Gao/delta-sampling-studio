@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://otherwise-roll-affiliated-murphy.trycloudflare.com",
+  COMFY_URL: "https://with-scroll-calls-medication.trycloudflare.com",
   hasBackend: false,
 };
 
