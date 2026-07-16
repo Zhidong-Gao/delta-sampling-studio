@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://announce-graduation-ana-movies.trycloudflare.com",
+  COMFY_URL: "https://browsing-divisions-completing-hometown.trycloudflare.com",
   hasBackend: false,
 };
 
