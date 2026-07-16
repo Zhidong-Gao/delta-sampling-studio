@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://unions-race-forgot-nsw.trycloudflare.com",
+  COMFY_URL: "https://api.trycloudflare.com",
   hasBackend: false,
 };
 
