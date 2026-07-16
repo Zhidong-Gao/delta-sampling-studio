@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://concern-reveals-cooperation-guys.trycloudflare.com",
+  COMFY_URL: "https://sandra-ind-correctly-cent.trycloudflare.com",
   hasBackend: false,
 };
 
