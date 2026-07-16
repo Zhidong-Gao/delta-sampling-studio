@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://optimum-wyoming-pub-opportunity.trycloudflare.com",
+  COMFY_URL: "https://slope-justice-trail-barriers.trycloudflare.com",
   hasBackend: false,
 };
 
