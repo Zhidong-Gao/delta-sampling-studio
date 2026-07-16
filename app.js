@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://known-garcia-rebel-tomato.trycloudflare.com",
+  COMFY_URL: "https://ball-side-millennium-narrative.trycloudflare.com",
   hasBackend: false,
 };
 
