@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://driven-facing-thumbzilla-double.trycloudflare.com",
+  COMFY_URL: "https://constructed-plastics-dollar-harbour.trycloudflare.com",
   hasBackend: false,
 };
 
