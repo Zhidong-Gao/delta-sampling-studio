@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://with-scroll-calls-medication.trycloudflare.com",
+  COMFY_URL: "https://mozilla-triumph-berkeley-happening.trycloudflare.com",
   hasBackend: false,
 };
 
