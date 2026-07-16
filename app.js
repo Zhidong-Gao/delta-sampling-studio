@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://reflection-papua-maximize-rogers.trycloudflare.com",
+  COMFY_URL: "https://dolls-mouth-roberts-david.trycloudflare.com",
   hasBackend: false,
 };
 
