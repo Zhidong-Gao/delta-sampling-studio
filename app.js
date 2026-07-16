@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://comprehensive-usb-require-outline.trycloudflare.com",
+  COMFY_URL: "https://amendment-codes-labour-low.trycloudflare.com",
   hasBackend: false,
 };
 
