@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://discussing-photography-schools-alone.trycloudflare.com",
+  COMFY_URL: "https://characteristic-maintained-actions-tools.trycloudflare.com",
   hasBackend: false,
 };
 
