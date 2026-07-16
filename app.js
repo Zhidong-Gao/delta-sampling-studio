@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://cream-acre-patients-gis.trycloudflare.com",
+  COMFY_URL: "https://tex-benefit-associates-installations.trycloudflare.com",
   hasBackend: false,
 };
 
