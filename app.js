@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://constructed-plastics-dollar-harbour.trycloudflare.com",
+  COMFY_URL: "https://mirror-advertiser-votes-linking.trycloudflare.com",
   hasBackend: false,
 };
 
