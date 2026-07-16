@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://hearings-wind-tasks-yields.trycloudflare.com",
+  COMFY_URL: "https://otherwise-roll-affiliated-murphy.trycloudflare.com",
   hasBackend: false,
 };
 
