@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://yard-extensions-browse-gazette.trycloudflare.com",
+  COMFY_URL: "https://ram-stability-entitled-circuits.trycloudflare.com",
   hasBackend: false,
 };
 
