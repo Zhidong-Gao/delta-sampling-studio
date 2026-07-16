@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://preceding-investor-dollar-pix.trycloudflare.com",
+  COMFY_URL: "https://brussels-scotland-however-galaxy.trycloudflare.com",
   hasBackend: false,
 };
 
