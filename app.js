@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://zone-stainless-hopefully-makers.trycloudflare.com",
+  COMFY_URL: "https://presentations-catalogs-bless-soa.trycloudflare.com",
   hasBackend: false,
 };
 
