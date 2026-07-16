@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://coins-forty-batman-fashion.trycloudflare.com",
+  COMFY_URL: "https://cabinet-fioricet-jay-electro.trycloudflare.com",
   hasBackend: false,
 };
 
