@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://kentucky-reid-christine-public.trycloudflare.com",
+  COMFY_URL: "https://driven-facing-thumbzilla-double.trycloudflare.com",
   hasBackend: false,
 };
 
