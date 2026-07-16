@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://batman-colony-ability-replaced.trycloudflare.com",
+  COMFY_URL: "https://harry-thesaurus-partly-opponents.trycloudflare.com",
   hasBackend: false,
 };
 
