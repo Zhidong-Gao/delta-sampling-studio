@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://reviewer-investigator-breeds-continuity.trycloudflare.com",
+  COMFY_URL: "https://reaction-latter-such-modes.trycloudflare.com",
   hasBackend: false,
 };
 
