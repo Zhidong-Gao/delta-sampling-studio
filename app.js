@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://necessarily-assist-dig-reward.trycloudflare.com",
+  COMFY_URL: "https://optimum-wyoming-pub-opportunity.trycloudflare.com",
   hasBackend: false,
 };
 
