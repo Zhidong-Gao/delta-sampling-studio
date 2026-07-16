@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://amendment-codes-labour-low.trycloudflare.com",
+  COMFY_URL: "https://phoenix-lottery-builds-diana.trycloudflare.com",
   hasBackend: false,
 };
 
