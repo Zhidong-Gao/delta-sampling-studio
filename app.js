@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://cow-brochures-resolved-without.trycloudflare.com",
+  COMFY_URL: "https://ing-about-wizard-newspapers.trycloudflare.com",
   hasBackend: false,
 };
 
