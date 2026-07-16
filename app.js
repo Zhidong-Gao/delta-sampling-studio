@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://ceramic-revolutionary-specially-energy.trycloudflare.com",
+  COMFY_URL: "https://reflection-papua-maximize-rogers.trycloudflare.com",
   hasBackend: false,
 };
 
