@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://tex-benefit-associates-installations.trycloudflare.com",
+  COMFY_URL: "https://cow-brochures-resolved-without.trycloudflare.com",
   hasBackend: false,
 };
 
