@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://rich-eds-configuring-untitled.trycloudflare.com",
+  COMFY_URL: "https://reviewer-investigator-breeds-continuity.trycloudflare.com",
   hasBackend: false,
 };
 
