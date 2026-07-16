@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://big-wma-volumes-correct.trycloudflare.com",
+  COMFY_URL: "https://yard-extensions-browse-gazette.trycloudflare.com",
   hasBackend: false,
 };
 
