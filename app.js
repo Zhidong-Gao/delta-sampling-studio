@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://starsmerchant-half-preventing-happened.trycloudflare.com",
+  COMFY_URL: "https://batman-colony-ability-replaced.trycloudflare.com",
   hasBackend: false,
 };
 
