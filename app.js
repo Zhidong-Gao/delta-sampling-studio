@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://temporarily-allen-casey-fairly.trycloudflare.com",
+  COMFY_URL: "https://smart-metals-largely-displays.trycloudflare.com",
   hasBackend: false,
 };
 
