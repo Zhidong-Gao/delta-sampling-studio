@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://sandra-ind-correctly-cent.trycloudflare.com",
+  COMFY_URL: "https://unions-race-forgot-nsw.trycloudflare.com",
   hasBackend: false,
 };
 
