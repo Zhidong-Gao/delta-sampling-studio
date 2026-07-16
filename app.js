@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://harry-thesaurus-partly-opponents.trycloudflare.com",
+  COMFY_URL: "https://ampland-treasures-field-briefing.trycloudflare.com",
   hasBackend: false,
 };
 
