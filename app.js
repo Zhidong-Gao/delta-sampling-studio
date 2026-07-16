@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://homework-info-elementary-finds.trycloudflare.com",
+  COMFY_URL: "https://moscow-touched-hint-reprints.trycloudflare.com",
   hasBackend: false,
 };
 
