@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://improve-father-throughout-tire.trycloudflare.com",
+  COMFY_URL: "https://kentucky-reid-christine-public.trycloudflare.com",
   hasBackend: false,
 };
 
