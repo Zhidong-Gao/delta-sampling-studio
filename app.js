@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://ing-about-wizard-newspapers.trycloudflare.com",
+  COMFY_URL: "https://improve-father-throughout-tire.trycloudflare.com",
   hasBackend: false,
 };
 
