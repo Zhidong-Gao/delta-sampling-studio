@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://mirror-advertiser-votes-linking.trycloudflare.com",
+  COMFY_URL: "https://concern-reveals-cooperation-guys.trycloudflare.com",
   hasBackend: false,
 };
 
