@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://moscow-touched-hint-reprints.trycloudflare.com",
+  COMFY_URL: "https://infringement-ken-exchanges-promotions.trycloudflare.com",
   hasBackend: false,
 };
 
