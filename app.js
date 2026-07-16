@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://ram-stability-entitled-circuits.trycloudflare.com",
+  COMFY_URL: "https://str-medicines-competitions-cylinder.trycloudflare.com",
   hasBackend: false,
 };
 
