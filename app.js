@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://milton-prefix-publications-firefox.trycloudflare.com",
+  COMFY_URL: "https://discussing-photography-schools-alone.trycloudflare.com",
   hasBackend: false,
 };
 
