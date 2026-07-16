@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://phoenix-lottery-builds-diana.trycloudflare.com",
+  COMFY_URL: "https://gradually-wisdom-formerly-felt.trycloudflare.com",
   hasBackend: false,
 };
 
