@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://piece-grows-cookie-carolina.trycloudflare.com",
+  COMFY_URL: "https://announce-graduation-ana-movies.trycloudflare.com",
   hasBackend: false,
 };
 
