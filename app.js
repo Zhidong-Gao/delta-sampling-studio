@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://gordon-infrared-integrate-offices.trycloudflare.com",
+  COMFY_URL: "https://roommates-forms-graph-atlas.trycloudflare.com",
   hasBackend: false,
 };
 
