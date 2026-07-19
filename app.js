@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://roommates-forms-graph-atlas.trycloudflare.com",
+  COMFY_URL: "https://pillow-consisting-without-buyer.trycloudflare.com",
   hasBackend: false,
 };
 
