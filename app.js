@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://nobody-below-beginners-bug.trycloudflare.com",
+  COMFY_URL: "https://ticket-allied-boston-industries.trycloudflare.com",
   hasBackend: false,
 };
 
