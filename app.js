@@ -10,7 +10,7 @@
  * ============================================================ */
 
 const CONFIG = {
-  COMFY_URL: "https://pillow-consisting-without-buyer.trycloudflare.com",
+  COMFY_URL: "https://nobody-below-beginners-bug.trycloudflare.com",
   hasBackend: false,
 };
 
